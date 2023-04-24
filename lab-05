@@ -1,0 +1,28 @@
+install.packages("jsonlite")
+library(jsonlite)
+ine.url <-"https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/2852?nult=5&tip=AM"
+pob.esp <- fromJSON(ine.url)
+
+float.url <- "https://www.floatrates.com/daily/usd.json"
+floattrates <-fromJSON(float.url)
+
+install.packages("XML")
+library("XML")
+bm.url <-"http://api.worldbank.org/v2/countries/all.indicators/NY.GDP.MKTP.CD?date=2019:20020&per_page=500&page=1"
+bm.doc <- xmlParse(bm.url)
+
+root.node <-xmlRoot(bm.doc)
+root.node[1]
+root.node[2]
+bm.data<- xmlSApply(root.node,function(x) xmlSApply(x,xmlValue))
+bm.datos <-data.frame(t(bm.data),row.names = NULL)
+
+auto <- read.csv("C:/Users/mache/OneDrive/Escritorio/data/auto-mpg.csv", header =  TRUE,sep = ",")
+
+wpob.url <- "C:/Users/mache/OneDrive/Escritorio/data/WorldPopulation-wiki.html"
+tablas <- readHTMLTable(wpob.url)
+
+most_wpob<-tablas[[5]]
+head(most_wpob,3)
+
+tabla_unica <- readHTMLTable(wpob.url,wich = 5)
